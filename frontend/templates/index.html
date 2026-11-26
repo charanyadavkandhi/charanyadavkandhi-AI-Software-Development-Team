@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Software Development Team (Multi-Agent)</title>
+    <meta name="description" content="Autonomous multi-agent software engineering system featuring PM, Developer, QA, and Documentation AI agents.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Prism Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="background-glow top-left"></div>
+    <div class="background-glow bottom-right"></div>
+
+    <div class="app-container">
+        <!-- Top Navbar -->
+        <header class="navbar">
+            <div class="nav-brand">
+                <div class="brand-badge">
+                    <span class="pulse-dot"></span>
+                    <span class="brand-icon">🤖</span>
+                </div>
+                <div>
+                    <h1 class="brand-title">AI Software Development Team</h1>
+                    <p class="brand-sub">Autonomous Multi-Agent Engineering System • Capstone Project</p>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <div class="team-chip" title="Capstone Team 189">
+                    <span class="chip-label">SRU CS&AI</span>
+                    <span class="chip-team">Team 189</span>
+                </div>
+                <div class="engine-badge" id="engineStatusBadge">
+                    <span class="engine-indicator"></span>
+                    <span id="engineStatusText">Autonomous Engine</span>
+                </div>
+                <button class="icon-btn" id="settingsBtn" title="API Settings">⚙️</button>
+            </div>
+        </header>
+
+        <!-- Prompt & Input Section -->
+        <section class="prompt-card">
+            <div class="card-header">
+                <h2>Define Software Requirement</h2>
+                <span class="badge-tag">Multi-Agent Input</span>
+            </div>
+            <p class="section-desc">Describe the software, application, or API you want the AI Team to build. The agents will plan, code, test, and document it.</p>
+            
+            <div class="prompt-input-wrapper">
+                <textarea id="promptInput" rows="3" placeholder="e.g., Build a modern full-stack Task Management app with Python Flask, SQLite, and dark-mode glassmorphic UI..."></textarea>
+                <div class="prompt-bottom-bar">
+                    <div class="preset-chips-container" id="presetChips">
+                        <span class="preset-label">Presets:</span>
+                        <!-- Injected via JavaScript -->
+                    </div>
+                    <button id="launchBtn" class="btn-launch">
+                        <span class="btn-icon">⚡</span>
+                        <span>Launch Agent Team</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Agent Live Pipeline Visualizer -->
+        <section class="pipeline-section" id="pipelineSection">
+            <div class="pipeline-header">
+                <div class="header-left">
+                    <h3>Multi-Agent Workflow Simulation</h3>
+                    <span id="pipelineStatusBadge" class="status-pill idle">Standby</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressBar"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+
+            <div class="agents-grid">
+                <!-- Agent 1: PM Agent -->
+                <div class="agent-card" id="agentCardPM">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar pm">📋</div>
+                        <div class="agent-meta">
+                            <h4>Project Manager</h4>
+                            <span class="agent-role">System Architecture & Specs</span>
+                        </div>
+                    </div>
+                    <div class="agent-status-row">
+                        <span class="agent-state-pill" id="agentStatePM">Waiting</span>
+                    </div>
+                    <p class="agent-activity" id="agentActivityPM">Awaiting requirement input...</p>
+                </div>
+
+                <!-- Connector 1 -->
+                <div class="pipeline-connector" id="connector1"></div>
+
+                <!-- Agent 2: Developer Agent -->
+                <div class="agent-card" id="agentCardDev">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar dev">💻</div>
+                        <div class="agent-meta">
+                            <h4>Developer Agent</h4>
+                            <span class="agent-role">Full-Stack Code Synthesis</span>
+                        </div>
+                    </div>
+                    <div class="agent-status-row">
+                        <span class="agent-state-pill" id="agentStateDev">Waiting</span>
+                    </div>
+                    <p class="agent-activity" id="agentActivityDev">Awaiting architecture plan...</p>
+                </div>
+
+                <!-- Connector 2 -->
+                <div class="pipeline-connector" id="connector2"></div>
+
+                <!-- Agent 3: QA Agent -->
+                <div class="agent-card" id="agentCardQA">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar qa">🧪</div>
+                        <div class="agent-meta">
+                            <h4>Testing / QA Agent</h4>
+                            <span class="agent-role">AST Check & Unit Tests</span>
+                        </div>
+                    </div>
+                    <div class="agent-status-row">
+                        <span class="agent-state-pill" id="agentStateQA">Waiting</span>
+                    </div>
+                    <p class="agent-activity" id="agentActivityQA">Awaiting generated code...</p>
+                </div>
+
+                <!-- Connector 3 -->
+                <div class="pipeline-connector" id="connector3"></div>
+
+                <!-- Agent 4: Documentation Agent -->
+                <div class="agent-card" id="agentCardDoc">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar doc">📚</div>
+                        <div class="agent-meta">
+                            <h4>Documentation Agent</h4>
+                            <span class="agent-role">README & API Reference</span>
+                        </div>
+                    </div>
+                    <div class="agent-status-row">
+                        <span class="agent-state-pill" id="agentStateDoc">Waiting</span>
+                    </div>
+                    <p class="agent-activity" id="agentActivityDoc">Awaiting test verification...</p>
+                </div>
+            </div>
+
+            <!-- Real-time Agent Log Stream -->
+            <div class="log-stream-card">
+                <div class="log-header">
+                    <span>⚡ Live Agent Thought & Activity Stream</span>
+                    <span id="logTimestamp" class="log-time">Live Sync</span>
+                </div>
+                <div class="log-terminal" id="logTerminal">
+                    <div class="log-entry system">> Ready. Input a project requirement and click "Launch Agent Team".</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results & Artifacts Workspace -->
+        <section class="workspace-section" id="workspaceSection" style="display: none;">
+            <div class="workspace-top-bar">
+                <div class="project-title-meta">
+                    <h2 id="projectResultTitle">Generated Project</h2>
+                    <span id="projectSlugBadge" class="slug-tag">project_slug</span>
+                </div>
+                <div class="export-actions">
+                    <button class="btn-secondary" id="copyAllBtn">📋 Copy Active File</button>
+                    <button class="btn-export" id="downloadZipBtn">
+                        <span class="btn-icon">📦</span>
+                        <span>Download Project (.ZIP)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Workspace Tabs -->
+            <div class="workspace-tabs">
+                <button class="tab-btn active" data-tab="planTab">
+                    <span>📋 Architecture & Tasks</span>
+                </button>
+                <button class="tab-btn" data-tab="codeTab">
+                    <span>💻 Source Code Explorer</span>
+                    <span class="tab-count" id="filesCountBadge">0</span>
+                </button>
+                <button class="tab-btn" data-tab="qaTab">
+                    <span>🧪 QA & Test Matrix</span>
+                    <span class="tab-score-badge" id="qaScoreBadge">Score: --</span>
+                </button>
+                <button class="tab-btn" data-tab="docTab">
+                    <span>📚 Documentation</span>
+                </button>
+            </div>
+
+            <!-- Tab 1: Architecture & Tasks -->
+            <div class="tab-content active" id="planTab">
+                <div class="plan-grid">
+                    <div class="plan-summary-box">
+                        <h3>System Summary & Architecture</h3>
+                        <p id="planSummaryText" class="plan-desc">Summary will appear here...</p>
+                        
+                        <div class="meta-section">
+                            <h4>Architecture Pattern</h4>
+                            <div id="planArchitectureText" class="architecture-pill">MVC REST Pattern</div>
+                        </div>
+
+                        <div class="meta-section">
+                            <h4>Selected Tech Stack</h4>
+                            <div class="tech-tags-list" id="techTagsList"></div>
+                        </div>
+
+                        <div class="meta-section">
+                            <h4>Acceptance Criteria</h4>
+                            <ul class="criteria-list" id="criteriaList"></ul>
+                        </div>
+                    </div>
+
+                    <div class="plan-tasks-box">
+                        <h3>Agent Task Decomposition</h3>
+                        <div class="tasks-table" id="tasksTableList">
+                            <!-- Tasks injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Code Explorer -->
+            <div class="tab-content" id="codeTab">
+                <div class="code-explorer-layout">
+                    <div class="file-tree-sidebar">
+                        <div class="sidebar-title">Project Files</div>
+                        <div class="file-list" id="fileTreeList">
+                            <!-- File tabs injected here -->
+                        </div>
+                    </div>
+                    <div class="code-viewer-panel">
+                        <div class="viewer-header">
+                            <span id="activeFileName" class="active-file-label">app.py</span>
+                            <button class="btn-copy-code" id="copyFileBtn">Copy Code</button>
+                        </div>
+                        <pre class="code-pre"><code id="codeViewer" class="language-python"># Code will be displayed here...</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: QA & Test Matrix -->
+            <div class="tab-content" id="qaTab">
+                <div class="qa-dashboard-layout">
+                    <div class="qa-score-card">
+                        <div class="score-circle">
+                            <span id="qaQualityScore" class="score-number">98</span>
+                            <span class="score-label">QA SCORE</span>
+                        </div>
+                        <div class="qa-verdict">
+                            <h4 id="qaVerdictTitle">Passed Static & AST Checks</h4>
+                            <p id="qaSummaryDetails" class="qa-details">Zero syntax errors or vulnerability vectors identified.</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-testcases-box">
+                        <h3>Automated QA Test Assertions</h3>
+                        <div class="testcases-list" id="qaTestCasesList"></div>
+                    </div>
+                </div>
+
+                <div class="qa-code-box">
+                    <div class="viewer-header">
+                        <span>Automated Test Suite Script (tests/test_app.py)</span>
+                        <button class="btn-copy-code" id="copyTestCodeBtn">Copy Test Code</button>
+                    </div>
+                    <pre class="code-pre"><code id="qaTestCodeViewer" class="language-python"># Test suite code...</code></pre>
+                </div>
+            </div>
+
+            <!-- Tab 4: Documentation -->
+            <div class="tab-content" id="docTab">
+                <div class="doc-viewer-card">
+                    <div class="doc-actions-bar">
+                        <h3>Generated README.md & Execution Manual</h3>
+                        <button class="btn-copy-code" id="copyDocBtn">Copy Markdown</button>
+                    </div>
+                    <div class="markdown-rendered-view" id="markdownRenderedView">
+                        <!-- Rendered text / pre -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Modal -->
+        <div class="modal-backdrop" id="settingsModal">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3>AI Engine & API Configuration</h3>
+                    <button class="modal-close-btn" id="closeSettingsBtn">✕</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-desc">
+                        Configure your AI API keys below. If keys are not provided, the system seamlessly uses the high-fidelity <strong>Built-in Autonomous Engine</strong> for instant offline demos.
+                    </p>
+                    <div class="input-group">
+                        <label for="geminiKeyInput">Google Gemini API Key (Recommended)</label>
+                        <input type="password" id="geminiKeyInput" placeholder="AIzaSy...">
+                    </div>
+                    <div class="input-group">
+                        <label for="openaiKeyInput">OpenAI API Key (Optional)</label>
+                        <input type="password" id="openaiKeyInput" placeholder="sk-...">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" id="cancelSettingsBtn">Close</button>
+                    <button class="btn-primary" id="saveSettingsBtn">Save Configuration</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Capstone Project: <strong>AI Software Development Team (Multi-Agent)</strong> • Department of Computer Science & AI</p>
+            <p class="team-footer-members">Team 189: K. Charan Yadav • K. Akshitha • A. Shiva Spandana • CH. Manmith Vardhan</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
